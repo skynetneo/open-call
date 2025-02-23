@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Call Initiated</title>
+</head>
+<body>
+    <h1>Call Initiated</h1>
+    <p>Call SID: {{ call_sid }}</p>
+    <a href="/">Back to Main Page</a>
+     <!-- Button to toggle Human-in-the-Loop -->
+    <button onclick="toggleHumanInTheLoop('{{ call_sid }}')">Toggle Human-in-the-Loop</button>
+
+    <script>
+        async function toggleHumanInTheLoop(callSid) {
+            const response = await fetch(`/toggle-human-in-loop/${callSid}`, { method: 'POST' });
+            const data = await response.json();
+            alert(`Human-in-the-loop is now: ${data.human_in_loop}`);
+        }
+    </script>
+</body>
+</html>
