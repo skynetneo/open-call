@@ -8,6 +8,7 @@ from app.clients import ElevenLabsClient, GroqClient, SupabaseClient
 from app.utils import split_into_sentences
 from app.redis_manager import RedisManager
 from app.logger import logger  # Consistent logging
+from app.agents import memory_manager
 
 async def generate_text_stream(user_message: str, groq_client: GroqClient, elevenlabs_client: ElevenLabsClient,
                               supabase_client: SupabaseClient, websocket: WebSocket, stream_sid: str,
@@ -22,6 +23,10 @@ async def generate_text_stream(user_message: str, groq_client: GroqClient, eleve
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_message},
         ]
+        try:
+            memory_manager.add_memory(user_message)
+        except Exception:
+            pass
         full_response_text = ""  # Accumulate the full response
         async for chunk in await groq_client.generate_text_stream(messages):
             if chunk.choices and chunk.choices[0].delta and chunk.choices[0].delta.content:
@@ -73,6 +78,10 @@ async def process_text_chunk(text_chunk: str, elevenlabs_client: ElevenLabsClien
         logger.info(f"Sending to TTS: {sentence}")
         try:
             await stream_to_elevenlabs_and_db(sentence, elevenlabs_client, supabase_client, websocket, stream_sid, transcription_id, redis_client)
+            try:
+                memory_manager.add_memory(sentence)
+            except Exception:
+                pass
         except Exception as e:
             logger.error(f"Error in process_text_chunk: {e}")  # Log the specific error
             await websocket.send_json({"event": "error", "message": "Error processing text chunk."}) # Notify User

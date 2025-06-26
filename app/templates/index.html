@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Open Call</title>
+</head>
+<body>
+    <h1>Open Call</h1>
+    <h2>Place a Call</h2>
+    <form action="/make-call" method="post">
+        <label>Phone Number: <input type="text" name="phone_number" required></label><br>
+        <label>System Prompt:<br>
+            <textarea name="system_prompt" rows="6" cols="60">{{ default_system_prompt }}</textarea>
+        </label><br>
+        <label>Instructions:<br>
+            <textarea name="instructions" rows="3" cols="60"></textarea>
+        </label><br>
+        <label>Context:<br>
+            <textarea name="context" rows="3" cols="60"></textarea>
+        </label><br>
+        <button type="submit">Call</button>
+    </form>
+
+    <h2>Send SMS</h2>
+    <form action="/send-sms" method="post">
+        <label>Phone Number: <input type="text" name="phone_number" required></label><br>
+        <label>Message:<br>
+            <textarea name="message" rows="4" cols="60"></textarea>
+        </label><br>
+        <button type="submit">Send SMS</button>
+    </form>
+
+    <h2>History</h2>
+    <a href="/history">View Call and SMS History</a>
+</body>
+</html>
