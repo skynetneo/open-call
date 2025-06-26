@@ -2,11 +2,11 @@
 
 ## Agentic Calling and SMS with Twilio, Groq, and Gemini
 
-Open-Call is a minimal viable product (MVP) that enables AI-driven voice calls and SMS messaging using FastAPI, Uvicorn, Twilio, Groq's LLaMA 3.2 8B for instant text generation during calls, and Gemini 2.0 Pro Exp for SMS responses. This project provides a REST API for handling AI-enhanced communications.
+Open-Call is a minimal viable product (MVP) that enables AI-driven voice calls and SMS messaging using FastAPI, Uvicorn, Twilio, Gemini 2.5 Flash Lite Preview for instant text generation during calls, and Gemini 2.5 Pro Exp for SMS responses. This project provides a REST API for handling AI-enhanced communications.
 
 ## Features
-- AI-generated responses for voice calls (LLaMA 3.2 8B via Groq API)
-- AI-driven SMS responses (Gemini 2.0 Pro Exp)
+- AI-generated responses for voice calls (Gemini 2.5 Flash Lite Preview)
+- AI-driven SMS responses (Gemini 2.5 Pro Exp)
 - FastAPI backend for handling API requests
 - Uvicorn for ASGI server deployment
 - Twilio integration for SMS and voice call routing
