@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>History</title>
+</head>
+<body>
+    <h1>Call and SMS History</h1>
+    <h2>Calls</h2>
+    <ul>
+    {% for call in calls %}
+        <li>{{ call.to_number }} - {{ call.status }} - {{ call.created_at }}</li>
+    {% endfor %}
+    </ul>
+    <h2>SMS Messages</h2>
+    <ul>
+    {% for sms in sms_messages %}
+        <li>{{ sms.to_number }} - {{ sms.direction }} - {{ sms.created_at }}</li>
+    {% endfor %}
+    </ul>
+    <a href="/">Back</a>
+</body>
+</html>

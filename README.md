@@ -10,7 +10,8 @@ Open-Call is a minimal viable product (MVP) that enables AI-driven voice calls a
 - FastAPI backend for handling API requests
 - Uvicorn for ASGI server deployment
 - Twilio integration for SMS and voice call routing
-- HTML-based frontend (planned Tauri GUI integration)
+- HTML-based frontend (using assistants-ui concepts)
+- LangGraph agents with LangMem persistence
 - Dockerized environment for simplified deployment
 
 ## Installation
@@ -51,7 +52,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 - `GET /docs` – Access interactive API documentation (Swagger UI)
 
 ## Future Improvements
-- **Tauri GUI Integration:** Replace the current HTML frontend with a cross-platform desktop application
+ - **Assistants UI:** Improved web UI for configuring and launching calls
 - **Enhanced AI Pipelines:** Optimize response times and improve contextual understanding
 - **Multi-Agent Coordination:** Allow dynamic switching between models based on context
 - **Expanded Carrier Support:** Add support for more telephony providers beyond Twilio
