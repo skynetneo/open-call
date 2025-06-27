@@ -1,13 +1,31 @@
-"""LangGraph based agents for call handling."""
+from langchain.chat_models import init_chat_model
+from langgraph.func import entrypoint
+from langgraph.store.memory import InMemoryStore
+from langmem import create_memory_store_manager
 
-from langgraph.prebuilt import create_react_agent
-from langchain_openai import ChatOpenAI
-from langmem import create_memory_manager
+# 1. In-memory vector store, using Gemini embedding model
+store = InMemoryStore(
+    index={
+        "dims": 1536,
+        "embedding_model": "gemini-embedding-exp-03-07",
+    }
+)
 
-# Simple memory manager using langmem for persistence
-memory_manager = create_memory_manager(model="gpt-3.5-turbo")
+# 2. Use Gemini 2.5 Pro as your chat model
+llm = init_chat_model("google:gemini-2.5-pro")
 
-# React agent that will call tools in a loop. We keep it simple here
-react_agent = create_react_agent(ChatOpenAI(model="gpt-3.5-turbo"), tools=[])
+# 3. Memory manager: extracts/stores memories from every incoming message
+memory_manager = create_memory_store_manager(
+    "google:gemini-2.5-pro",
+    namespace=("memories",),
+)
 
-__all__ = ["memory_manager", "react_agent"]
+@entrypoint(store=store)
+async def chat(message: str):
+    # save the user’s message
+    await memory_manager.invoke(message)
+    # get a response from Gemini
+    result = await llm.ainvoke(message)
+    return result.content
+
+__all__ = ["memory_manager", "chat"]
